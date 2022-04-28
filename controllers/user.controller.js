@@ -85,8 +85,55 @@ async function findUser(req, res) {
     }
 }
 
+async function updateUser(req, res) {
+    const {
+        id,
+        name,
+        address,
+        email,
+        password,
+        photos,
+        creditcard_type,
+        creditcard_number,
+        creditcard_name,
+        creditcard_expired,
+        creditcard_cvv,
+    } = req.body;
+
+    try {
+        const update = await User.update(
+            {
+                name,
+                address,
+                email,
+                password,
+                photos: JSON.stringify(photos),
+                creditcard_type,
+                creditcard_number,
+                creditcard_name,
+                creditcard_expired,
+                creditcard_cvv,
+            },
+            {
+                where: {
+                    id: id,
+                },
+            }
+        );
+
+        return res.json({
+            message: 'success',
+        });
+    } catch (error) {
+        return res
+            .status(500)
+            .json({ error: 'Something went wrong. Please try again later.' });
+    }
+}
+
 module.exports = {
     registerUser,
     getAllUser,
     findUser,
+    updateUser,
 };

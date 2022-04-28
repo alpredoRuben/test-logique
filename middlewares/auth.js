@@ -33,6 +33,17 @@ const userValidationRules = () => {
     ];
 };
 
+const updateUserRules = () => {
+    return [
+        body('email').notEmpty().isEmail(),
+        body('id').notEmpty(),
+        body('creditcard_number').notEmpty(),
+        body('creditcard_name').notEmpty(),
+        body('creditcard_expired').notEmpty(),
+        body('creditcard_cvv').notEmpty(),
+    ];
+};
+
 const registerValidation = (req, res, next) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {
@@ -46,4 +57,9 @@ const registerValidation = (req, res, next) => {
     });
 };
 
-module.exports = { authenticateKey, registerValidation, userValidationRules };
+module.exports = {
+    authenticateKey,
+    registerValidation,
+    userValidationRules,
+    updateUserRules,
+};
