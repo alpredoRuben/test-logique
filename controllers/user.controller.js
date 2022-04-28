@@ -72,11 +72,17 @@ async function getAllUser(req, res) {
 }
 
 async function findUser(req, res) {
-    const id = req.params;
-
+    const { id } = req.params;
+    console.log(id);
     try {
         const user = await User.findByPk(id);
-    } catch (error) {}
+        user.photos = JSON.parse(user.photos);
+        return res.status(200).json(user);
+    } catch (error) {
+        return res
+            .status(500)
+            .json({ error: 'Something went wrong. Please try again later.' });
+    }
 }
 
 module.exports = {
